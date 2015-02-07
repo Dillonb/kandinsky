@@ -71,7 +71,7 @@ GLuint PrimitiveModeToken[N_MODELS] = {GL_TRIANGLES,          // triangle primit
 GLuint VertexArrayObject[N_MODELS];                           // One GPU object per model: initialized in init()
 
 //const int N_FIGURES = 600;
-const int N_FIGURES = 3;
+const int N_FIGURES = 7;
 std::vector<Figure> Figs;
 
 GLFWwindow* gWindow = NULL;               // pointer to the graphics window goverened by the OS
@@ -313,19 +313,32 @@ void init(void) {
     srand(time(NULL)); // initialize the random number generator rand(), using time as seed.
 
     int models[N_FIGURES];
-    models[0] = 2;
-    models[1] = 2;
+    models[0] = 1;
+    models[1] = 1;
     models[2] = 2;
+    models[3] = 2;
+    models[4] = 2;
+    models[5] = 0;
+    models[6] = 0;
 
     glm::vec4 colors[N_FIGURES];
-    colors[0] = getColor(255, 0, 0, 1);
-    colors[1] = getColor(0, 255, 0, 1);
-    colors[2] = getColor(0, 0, 255, 1);
+    colors[0] = getColor(242, 99, 99, 1);
+    colors[1] = getColor(99, 99, 242, 1);
+    colors[2] = getColor(0, 255, 0, 0.5);
+    colors[3] = getColor(0, 0, 255, 0.25);
+    colors[4] = getColor(128, 100, 20, 0.4);
+    colors[5] = getColor(255, 0, 255, 0.3);
+    colors[6] = getColor(0, 255, 255, 0.3);
 
     glm::mat4 transformations[N_FIGURES];
-    transformations[0] = getTransformation(0.5, 0.5, 0, 0, 0);
-    transformations[1] = getTransformation(0.4, 0.4, 0, 0, 0);
-    transformations[2] = getTransformation(0.3, 0.3, 0, 0, 0);
+    //sx sy theta tx ty
+    transformations[0] = getTransformation(0.3, 3, 30 * M_PI/180, 0, 0);
+    transformations[1] = getTransformation(0.3, 3, -30 * M_PI/180, 0, 0);
+    transformations[2] = getTransformation(0.4, 0.4, 0, 0, 0);
+    transformations[3] = getTransformation(0.3, 0.3, 0, 0.4, 0.3);
+    transformations[4] = getTransformation(0.3, 0.3, 0, -0.4, -0.3);
+    transformations[5] = getTransformation(1.5, 1.5, 0, -1, -1);
+    transformations[6] = getTransformation(1.5, 1.5, 180 * M_PI/180, 1, 1);
 
 
     for (int i = 0; i < sizeof(models) / sizeof(int); i++) {
