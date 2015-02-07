@@ -70,7 +70,8 @@ GLuint PrimitiveModeToken[N_MODELS] = {GL_TRIANGLES,          // triangle primit
     GL_TRIANGLE_FAN};      // circle primitive mode
 GLuint VertexArrayObject[N_MODELS];                           // One GPU object per model: initialized in init()
 
-const int N_FIGURES = 600;
+//const int N_FIGURES = 600;
+const int N_FIGURES = 3;
 std::vector<Figure> Figs;
 
 GLFWwindow* gWindow = NULL;               // pointer to the graphics window goverened by the OS
@@ -269,6 +270,14 @@ glm::mat4 getRandomTransformation() {
     return getTransformation(sx, sy, theta, tx, ty);
 }
 
+glm::vec4 getColor(int red, int green, int blue, GLfloat alpha) {
+    return glm::vec4(
+            static_cast<GLfloat>(red)/255,
+            static_cast<GLfloat>(green)/255,
+            static_cast<GLfloat>(blue)/255,
+            alpha);
+}
+
 glm::vec4 getRandomColor() {
     GLfloat red   = static_cast<GLfloat>(rand())/RAND_MAX;
     GLfloat green = static_cast<GLfloat>(rand())/RAND_MAX;
@@ -302,11 +311,28 @@ void init(void) {
     }
 
     srand(time(NULL)); // initialize the random number generator rand(), using time as seed.
-    for (int i=0; i < N_FIGURES; i++) {
+
+    int models[N_FIGURES];
+    models[0] = 2;
+    models[1] = 2;
+    models[2] = 2;
+
+    glm::vec4 colors[N_FIGURES];
+    colors[0] = getColor(255, 0, 0, 1);
+    colors[1] = getColor(0, 255, 0, 1);
+    colors[2] = getColor(0, 0, 255, 1);
+
+    glm::mat4 transformations[N_FIGURES];
+    transformations[0] = getTransformation(0.5, 0.5, 0, 0, 0);
+    transformations[1] = getTransformation(0.4, 0.4, 0, 0, 0);
+    transformations[2] = getTransformation(0.3, 0.3, 0, 0, 0);
+
+
+    for (int i = 0; i < sizeof(models) / sizeof(int); i++) {
         Figure fig;
-        fig.model = rand() % N_MODELS;
-        fig.color = getRandomColor();
-        fig.transformation = getRandomTransformation();
+        fig.model = models[i];
+        fig.color = colors[i];
+        fig.transformation = transformations[i];
         Figs.push_back(fig);
     }
 
